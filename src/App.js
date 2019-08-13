@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import Portfolios from './components/portfolios';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+        <Portfolios portfolios={this.state.portfolios} />
+    )
 }
 
+state = {
+  portfolios: []
+};
+
+componentDidMount (){
+
+   const URL = 'http://localhost:8090/api/peoples';
+
+    fetch(URL)
+    .then(res => res.json())
+    .then((data) => {
+         this.setState({ portfolios: data})
+    }).catch(console.log)
+  }
+} 
 export default App;
